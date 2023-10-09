@@ -25,7 +25,7 @@ public class UserController {
     public ResponseEntity addUser(@RequestBody UserRequestDto user){
         try {
             userService.addUser(user);
-            return new ResponseEntity(HttpStatus.CREATED);
+            return new ResponseEntity("User added.",HttpStatus.CREATED);
         }
         catch(Exception e){
             return new ResponseEntity(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
@@ -38,15 +38,22 @@ public class UserController {
             Boolean status = otpService.validateToken(token,email);
             System.out.println(status);
             if (status){
-                // retrive details
-                // convert into json
-                System.out.println(token+" "+ email);
                 return new ResponseEntity(HttpStatus.OK);
             }
             else
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.UNAUTHORIZED);
+        }
+    }
+    @GetMapping("/getUser")
+    public ResponseEntity getUserDetails(String email){
+        try{
+            UserResponseDto response = userService.getUserDetails(email);
+            return  new ResponseEntity(response,HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 }

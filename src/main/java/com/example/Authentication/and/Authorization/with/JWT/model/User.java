@@ -19,7 +19,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String name;
+    String firstName;
+
+    String lastName;
 
     String emailId;
 

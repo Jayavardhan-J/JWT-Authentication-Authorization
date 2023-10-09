@@ -8,6 +8,8 @@ import com.example.Authentication.and.Authorization.with.JWT.transformer.UserTra
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -21,5 +23,13 @@ public class UserService {
         else{
             throw new Exception("User already present, please login.");
         }
+    }
+
+    public UserResponseDto getUserDetails(String email) throws Exception {
+        User check = userRepository.findByEmailId(email).get();
+        if(check==null) throw new Exception("User not found.");
+        UserResponseDto saved = UserTransformer.userToResponseDto(check);
+        return saved;
+
     }
 }

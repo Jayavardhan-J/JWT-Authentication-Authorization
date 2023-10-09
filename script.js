@@ -116,7 +116,7 @@ const signInBtn = document.getElementById('sign-in-btn');
 			});
 		
 	})
-
+let sessionToken="";
 	function valdiateToken (token){
 		let emailId = document.getElementById('emailTex').value;
 		fetch('http://localhost:8081/home/dashboard?email='+emailId ,{
@@ -130,6 +130,7 @@ const signInBtn = document.getElementById('sign-in-btn');
 		.then(response => response.status)
 		.then(data =>{
 			if(data===200){
+				sessionToken=token;
 				window.location.href = "dashboard.html";
 			}
 			else{

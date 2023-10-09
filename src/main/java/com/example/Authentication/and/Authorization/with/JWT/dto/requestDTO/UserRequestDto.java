@@ -11,7 +11,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRequestDto {
-    String name;
+    String firstName;
+
+    String lastName;
 
     String emailId;
 

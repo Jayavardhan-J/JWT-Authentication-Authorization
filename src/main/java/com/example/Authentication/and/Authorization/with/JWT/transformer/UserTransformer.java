@@ -7,14 +7,16 @@ import com.example.Authentication.and.Authorization.with.JWT.model.User;
 public class UserTransformer {
     public static User userRequestDtoToUser(UserRequestDto userRequestDto){
         return User.builder()
-                .name(userRequestDto.getName())
+                .firstName(userRequestDto.getFirstName())
+                .lastName(userRequestDto.getLastName())
                 .emailId(userRequestDto.getEmailId())
                 .mobile(userRequestDto.getMobile())
                 .build();
     }
     public static UserResponseDto userToResponseDto(User user){
         return UserResponseDto.builder()
-                .name(user.getName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .emailId(user.getEmailId())
                 .mobile(user.getMobile())
                 .build();
