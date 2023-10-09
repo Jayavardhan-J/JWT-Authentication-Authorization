@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+    <div class="main-body">
+        <div class="sidebar">
+            
+                <button id="profile-btn">Profile</button>
+            
+            
+                <button id="test-api-btn">Test APIs</button>
+            
+        </div>
+        <div class="container" >
+            <div class="profile-container" >
+                <div class="profile-img-container" id="profile-container">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="profile_img">
+                    <h1>Full Name</h1>
+                    <div class="contact-details">
+                        <h2>Email Id</h2>
+                        <h2>Phone number</h2>
+                    </div>
+                    
+                </div>
+                <div class="test-api-container" id="test-api-container">
+                    <h1>Test APIs</h1>
+                    <h2>Copy these API and test it on Postman</h2>
+                    <div class="api-container">
+                        <input type="text" value="http://localhost:8081/home/addUser" style="pointer-events: none;">
+                        <p>This API is used to add new user.</p>
+                    </div>
+                    <div class="api-container">
+                        <input type="text" value="http://localhost:8081/home/dashboard" style="pointer-events: none;">
+                        <p>This API is used to access homepage (this is secured page and needs JWT to access it).</p>
+                    </div><div class="api-container">
+                        <input type="text" value="http://localhost:8081/user/sendOtp" style="pointer-events: none;">
+                        <p>This API is used to send the otp to the email Id.</p>
+                    </div><div class="api-container">
+                        <input type="text" value="http://localhost:8081/user/validateOtp" style="pointer-events: none;">
+                        <p>This API is used to validate the OTP and generates JWT on successful validation of OTP</p>
+                    </div><div class="api-container">
+                        <input type="text" value="http://localhost:8081/user/validateOtp" style="pointer-events: none;">
+                        <p>This API is used to validate the OTP and generates JWT on successful validation of OTP</p>
+                    </div><div class="api-container">
+                        <input type="text" value="http://localhost:8081/user/validateOtp" style="pointer-events: none;">
+                        <p>This API is used to validate the OTP and generates JWT on successful validation of OTP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./dashboardScript.js"></script>
+</body>
+</html>
