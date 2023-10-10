@@ -38,6 +38,7 @@ public class UserController {
             Boolean status = otpService.validateToken(token,email);
             System.out.println(status);
             if (status){
+
                 return new ResponseEntity(HttpStatus.OK);
             }
             else
@@ -47,10 +48,14 @@ public class UserController {
         }
     }
     @GetMapping("/getUser")
-    public ResponseEntity getUserDetails(String email){
+    public ResponseEntity getUserDetails(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,String email){
         try{
-            UserResponseDto response = userService.getUserDetails(email);
-            return  new ResponseEntity(response,HttpStatus.FOUND);
+            Boolean status = otpService.validateToken(token,email);
+            if(status){
+                UserResponseDto response = userService.getUserDetails(email);
+                return  new ResponseEntity(response,HttpStatus.FOUND);
+            }
+            else return new ResponseEntity("Unauthorized Access!",HttpStatus.FORBIDDEN);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
