@@ -1,3 +1,8 @@
+
+
+import { setProfile } from "./dash.js";
+	
+	
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
@@ -34,11 +39,9 @@ signUpBtn.addEventListener('click',(e) => {
 		})
 		.then(response => response.text())
 		.then((data) => {
-		console.log(data);
-			let ele = document.getElementById('sign-up-status');
-			let statusMessage = document.createElement('p');
-			statusMessage.innerText=data;
-			ele.appendChild(statusMessage);
+		
+			let ele = document.getElementById('signUp-status-message');
+			ele.innerText=data;
 		})
 		.catch((error) => {
 		console.error('Error:', error);
@@ -46,9 +49,10 @@ signUpBtn.addEventListener('click',(e) => {
 	
 })
 
+
+
 // Sign In OTP Button
 const signInBtn = document.getElementById('sign-in-btn');
-
 	signInBtn.addEventListener('click',(e) => {
 		e.preventDefault();
 		
@@ -63,62 +67,76 @@ const signInBtn = document.getElementById('sign-in-btn');
 			})
 			.then(response => response.text())
 			.then((data) => {
-			
-			// window.location.href = "dashboard.html"
-				// console.log(data.text());
-				let ele = document.getElementById('sign-in-status');
-				let statusMessage = document.createElement('p');
-				statusMessage.innerText=data;
-				ele.appendChild(statusMessage);
+				let ele = document.getElementById('signIn-status-message');
+				ele.innerText=data;
 			})
-			
 			.catch((error) => {
 			console.error('Error:', error);
 			});
-		
 	})
+
+
 
 	// Sign in and generate token
 	const signInBtnText = document.getElementById('sign-in-validate-btn');
 
 	signInBtnText.addEventListener('click',(e) => {
 		e.preventDefault();
-		
 		let otp = document.getElementById('sign-in-otp-text').value;
 		let email = document.getElementById('emailTex').value;	
-		console.log(otp)
-		fetch('http://localhost:8081/user/validateOtp', {
+		validateOtp(otp,email);
+	})
+
+	const signUpBtnText = document.getElementById('sign-up-validate-btn');
+
+	signUpBtnText.addEventListener('click',(e) => {
+		e.preventDefault();
+		let fName = document.getElementById('firstName').value;
+		let lName = document.getElementById('lastName').value;
+		let mobileNo = document.getElementById('mobileNumber').value;
+		let otp = document.getElementById('sign-up-otp-text').value;
+		let email = document.getElementById('emailText').value;	
+		createUser(fName,lName,mobileNo,email);
+		validateOtp(otp,email);
+	})
+function createUser(fName,lName,mobileNo,email){
+	fetch('http://localhost:8081/home/addUser', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({emailId: email, oneTimePassword : otp}),
+			body: JSON.stringify({firstName: fName, lastName : lName, emailId:email, mobile:mobileNo}),
 			})
-			.then(response => response.text())
+			.then(response =>{return response})
+			.then(data =>{console.log(data)});
+}
+function validateOtp(otpField,emailField){
+	fetch('http://localhost:8081/user/validateOtp', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({emailId: emailField, oneTimePassword : otpField}),
+			})
+			.then(response => {return response} )
 			.then((data) => {
-				console.log(data);
-			 if(data){
-				valdiateToken(data);
-				
-			 }
-			 else{
-				console.log(data);
-				let ele = document.getElementById('sign-in-status');
-				let statusMessage = document.createElement('p');
-				statusMessage.innerText=data;
-				ele.appendChild(statusMessage);
-			 }
-				
+				if(data.status===200){
+					return data.text();
+				}
 			})
-			
+			.then(newToken => {
+				validateReuqest(newToken,emailField);
+			})
 			.catch((error) => {
 			console.error('Error:', error);
 			});
-		
-	})
+}
+
+
 let sessionToken="";
-	function valdiateToken (token){
-		let emailId = document.getElementById('emailTex').value;
+
+
+	function validateReuqest(token,emailId){
 		fetch('http://localhost:8081/home/dashboard?email='+emailId ,{
 			method :'POST',
 			headers : {
@@ -129,20 +147,41 @@ let sessionToken="";
 		})
 		.then(response => response.status)
 		.then(data =>{
-			if(data===200){
-				sessionToken=token;
-				window.location.href = "dashboard.html";
-			}
-			else{
-				console.log(data);
-				let ele = document.getElementById('sign-in-status');
-				let statusMessage = document.createElement('p');
-				statusMessage.innerText=data;
-				ele.appendChild(statusMessage);
-			}
+				if(data==200){
+					sessionToken=token;
+					fetchUser(token,emailId);
+				}
+				
 		})
-
-		
+	}
+	
+	function fetchUser (token,emailId){
+		fetch('http://localhost:8081/home/getUser?email='+emailId, {
+			method:'GET',
+			headers :{
+				'Content-Type' : 'application/json',
+				'Authorization' : 'Bearer '+token
+			}
+			
+		})
+		.then(response => {
+			
+			if(response.status==302){
+				
+				return response.json()
+			}
+			else return "Unauthorized access!"
+			})
+		.then(data => {
+			console.log(data);
+			// console.log(data.firstName)
+			// console.log(data.emailId)
+			// console.log(data.mobile)
+			
+			
+			setProfile(data.firstName,data.emailId,data.mobile);
+			// window.location.href = "dashboard.html";
+		})
 	}
 
-
+	

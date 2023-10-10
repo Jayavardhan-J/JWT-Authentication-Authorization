@@ -12,16 +12,16 @@
         <div class="form-container sign-up-container">
             <form action="#">
                 <h1>Create Account</h1>
-                <input type="text" placeholder="First Name">
-                <input type="text" placeholder="Last Name">
-                <input type="text" placeholder="Mobile Number">
+                <input type="text" placeholder="First Name" id="firstName">
+                <input type="text" placeholder="Last Name" id="lastName">
+                <input type="text" placeholder="Mobile Number" id="mobileNumber">
                 <input type="email" placeholder="Email" class="emailText" id="emailText">
                 <div class="otp-container">
                     <input type="text" placeholder="OTP" id="sign-up-otp-text">
                     <button class="otp-btn" id="sign-up-btn">Send OTP</button>
                 </div>
-                <button>Sign Up</button>
-                <div id="sign-up-status"></div>
+                <button id="sign-up-validate-btn">Sign Up</button>
+                <div id="sign-up-status"><p id="signUp-status-message"></p></div>
             </form>
         </div>
 
@@ -36,7 +36,7 @@
                 </div>
 			    
 			    <button id="sign-in-validate-btn">Sign In</button>
-                <div id="sign-in-status"></div>
+                <div id="sign-in-status"><p id="signIn-status-message"></p></div>
             </form>
             
         </div>
@@ -60,6 +60,7 @@
     </div>
 
 
-    <script src="./script.js"></script>
+    <script type="module" src="./script.js"></script>
+    <!-- <script src="./dashboardScript.js"></script> -->
 </body>
 </html>
