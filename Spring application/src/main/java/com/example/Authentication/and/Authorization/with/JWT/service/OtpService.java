@@ -49,7 +49,7 @@ public class OtpService {
         saveOtp.setOneTimePassword(otp);
         otpRepository.save(saveOtp);
 
-        System.out.println(otp);
+        
         String text = "Hello User, \n" + "Your one-time password is : "+otp+"\n"+"Please do not share with anyone. \n"+"Thank You";
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setText(text);
@@ -127,7 +127,7 @@ public class OtpService {
     }
 
     public Boolean validateToken(String token, String email) {
-        System.out.println(token + " " +email);
+//        System.out.println(token + " " +email);
         final String username = extractUsername(token.split(" ")[1].trim());
         return (username.equals(email)) && !isTokenExpired(token.split(" ")[1].trim());
     }

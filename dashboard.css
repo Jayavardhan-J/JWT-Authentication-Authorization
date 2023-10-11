@@ -109,3 +109,13 @@ img{
     font-size: 20px;
     
 }
+#name{
+    margin: 10px 0px;
+    font-size: 30px;
+    font-weight: 900;
+}
+#emailId, #mobile{
+    margin: 5px 0px;
+    font-size: 20px;
+    font-weight: 500;
+}

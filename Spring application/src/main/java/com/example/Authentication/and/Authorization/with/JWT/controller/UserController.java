@@ -36,7 +36,7 @@ public class UserController {
         try {
 
             Boolean status = otpService.validateToken(token,email);
-            System.out.println(status);
+
             if (status){
 
                 return new ResponseEntity(HttpStatus.OK);

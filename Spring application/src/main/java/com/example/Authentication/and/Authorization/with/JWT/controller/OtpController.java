@@ -21,12 +21,14 @@ public class OtpController {
 
     @PostMapping("/sendOtp")
     public ResponseEntity generateOTP(@RequestBody GetOtpRequestDto otp){
+
         otpService.generateOTP(otp);
         return new ResponseEntity("OTP Sent", HttpStatus.CREATED);
     }
     @PostMapping("/validateOtp")
     public ResponseEntity validateOTP(@RequestBody OtpRequestDto otp){
         try{
+
             String token = otpService.validateOtp(otp);
             return new ResponseEntity(token,HttpStatus.OK);
         }

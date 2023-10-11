@@ -18,15 +18,17 @@ profileApiBtn.addEventListener('click',() => {
 	addEle.style.display='none';
 })
 
-// export function setProfile(name,email,phoneNo){
-// 	let nameEle = document.getElementById('name');
-// 	let emailEle = document.getElementById('emailId');
-// 	let phoneEle =document.getElementById('mobile');
-// 			console.log(nameEle.value);
-// 			console.log(email)
-// 			console.log(phoneNo)
-// 	nameEle.innerHTML=name;
-// 	emailEle.innerHTML=email;
-// 	phoneEle.innerHTML=phoneNo;
-// }
-
+function setProfile (){
+	var storedObjectString = localStorage.getItem('myObject');
+	var retrievedObject = JSON.parse(storedObjectString);
+	let nameEle = document.getElementById("name");
+	let emailEle = document.getElementById("emailId");
+	let phoneEle = document.getElementById("mobile");
+	
+	nameEle.innerText=retrievedObject.firstName+" "+retrievedObject.lastName;
+	phoneEle.innerText = retrievedObject.mobile;
+	emailEle.innerText=retrievedObject.emailId;
+  
+	
+  }
+  setProfile();
