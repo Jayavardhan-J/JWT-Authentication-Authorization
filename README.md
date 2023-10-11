@@ -3,7 +3,7 @@
 
 
 
-This project is a web application that provides GitHub authentication with the added security of JWT (JSON Web Tokens) and OTP (One-Time Password) authentication. It allows users to log in to your application one time password , and then uses JWT for secure session management. 
+This project is a web application that provides email authentication with the added security of JWT (JSON Web Tokens) and OTP (One-Time Password) authentication. It allows users to log in to your application one time password , and then uses JWT for secure session management. 
 ## Features
 
 * JWT-based session management for enhanced security.
