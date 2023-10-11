@@ -28,7 +28,9 @@ signUpBtn.addEventListener("click", (e) => {
     .then((response) => response.text())
     .then((data) => {
       let ele = document.getElementById("signUp-status-message");
-
+	  let parentEle =document.getElementById('sign-up-status');
+	  parentEle.style.backgroundColor="#b3f5c4"
+	  parentEle.style.visibility="visible";
       ele.innerText = data;
     })
     .catch((error) => {
@@ -53,12 +55,12 @@ signInBtn.addEventListener("click", (e) => {
     .then((response) => response.text())
     .then((data) => {
       let ele = document.getElementById("signIn-status-message");
-
+		let parentEle =document.getElementById('sign-in-status');
+		parentEle.style.backgroundColor="#b3f5c4"
+		parentEle.style.visibility="visible";
       ele.innerText = data;
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    
 });
 
 // Sign in and generate token
@@ -101,7 +103,7 @@ function createUser(fName, lName, mobileNo, email) {
       return response;
     })
     .then((data) => {
-      console.log(data);
+      
     });
 }
 function validateOtp(otpField, emailField) {
@@ -113,20 +115,32 @@ function validateOtp(otpField, emailField) {
     body: JSON.stringify({ emailId: emailField, oneTimePassword: otpField }),
   })
     .then((response) => {
-      console.log(response);
+      
       return response;
     })
     .then((data) => {
+		
       if (data.status === 200) {
         return data.text();
       }
+	  else{
+		let parentEle =document.getElementById('sign-in-status');
+		parentEle.style.backgroundColor="#fc9f9f";
+		parentEle.style.visibility="visible";
+		let signInEle = document.getElementById('signIn-status-message');
+		signInEle.innerText="Invalid OTP"
+
+		let signUpEle =document.getElementById('sign-up-status');
+		signUpEle.style.backgroundColor="#fc9f9f";
+		signUpEle.style.visibility="visible";
+		let upEle = document.getElementById('signUp-status-message');
+		upEle.innerText="Invalid OTP"
+	  }
     })
     .then((newToken) => {
       validateReuqest(newToken, emailField);
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    
 }
 
 let sessionToken = "";
@@ -163,6 +177,7 @@ function fetchUser(token, emailId) {
       } else return "Unauthorized access!";
     })
     .then((data) => {
+		localStorage.clear();
       var myObject = {
         firstName: data.firstName,
         lastName: data.lastName,

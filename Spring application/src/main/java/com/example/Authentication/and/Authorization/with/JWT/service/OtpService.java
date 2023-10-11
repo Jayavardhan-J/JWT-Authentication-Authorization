@@ -49,7 +49,7 @@ public class OtpService {
         saveOtp.setOneTimePassword(otp);
         otpRepository.save(saveOtp);
 
-        
+        System.out.println(otp);
         String text = "Hello User, \n" + "Your one-time password is : "+otp+"\n"+"Please do not share with anyone. \n"+"Thank You";
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setText(text);
